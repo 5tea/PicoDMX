@@ -2,7 +2,7 @@
 Probable one the simplest implementations of DMX on a Raspberry Pi Pico.
 
 
-'''
+```
 from machine import Pin, SPI
 import array
 import rp2
