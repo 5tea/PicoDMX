@@ -12,7 +12,7 @@ import os
 # We'll use the onboard LED indicate each DMX frame.
 led = Pin(25, Pin.OUT)
 
-@rp2.asm_pio(out_init=rp2.PIO.OUT_LOW, set_init=rp2.PIO.OUT_LOW, out_shiftdir=rp2.PIO.SHIFT_RIGHT, autopull=True, pull_thresh=8)
+@rp2.asm_pio(out_init=rp2.PIO.OUT_HIGH, set_init=rp2.PIO.OUT_HIGH, out_shiftdir=rp2.PIO.SHIFT_RIGHT, autopull=True, pull_thresh=8)
 
 def w():
     label("stall")
@@ -21,9 +21,11 @@ def w():
     label("proceed")
     set(pins, 0)	[24] # BREAK - LOW FOR 100uS
     set(pins, 1)	[2] # MARK AFTER BREAK - HIGH FOR 12us    
+    
     set(pins, 0)	# START BIT FOR SLOT 0
     set(pins, 0)	[7] # START CODE - USUALLY 0x00, CHECK DOCS
     set(pins, 1)	[1]	# STOP BITS    
+    
     label("slot")
     set(pins, 0)	# START BIT FOR SLOTS 1-512
     out(pins, 1)
@@ -41,7 +43,7 @@ def w():
 # Initialize State Machine, DMX freq. is 250kHz, all OUT & SET commands to go via Pin 0.
 sm = rp2.StateMachine(0, w, freq=250000, out_base=Pin(0), set_base=Pin(0))
 
-# Activate State |Machine
+# Activate State Machine
 sm.active(1)
 
 # Iterate through 0-255 for channels 1-5 at a rate of ~10Hz
