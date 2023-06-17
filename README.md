@@ -20,16 +20,12 @@ def w():
     jmp("stall")
     label("proceed")
     set(pins, 0)	[24] # BREAK - LOW FOR 100uS
-    set(pins, 1)	[2] # MARK AFTER BREAK - HIGH FOR 12uS
-    
-    # Slot 0
-    set(pins, 0)	# START BIT
+    set(pins, 1)	[2] # MARK AFTER BREAK - HIGH FOR 12us    
+    set(pins, 0)	# START BIT FOR SLOT 0
     set(pins, 0)	[7] # START CODE - USUALLY 0x00, CHECK DOCS
-    set(pins, 1)	[1]	# STOP BITS
-    
-    # Slot 1 and beyond
+    set(pins, 1)	[1]	# STOP BITS    
     label("slot")
-    set(pins, 0)	# START BIT
+    set(pins, 0)	# START BIT FOR SLOTS 1-512
     out(pins, 1)
     out(pins, 1)
     out(pins, 1)
