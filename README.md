@@ -1,6 +1,7 @@
 # PicoDMX
-Probably one the simplest implementations of DMX on a Raspberry Pi Pico.
+This could be one of the simplest implentations of the DMX protocol on a Raspberry Pi Pico.
 
+Use an RS485 transceiver. Connect TX to Pin 0.
 
 ```
 from machine import Pin, SPI
@@ -46,12 +47,12 @@ sm = rp2.StateMachine(0, w, freq=250000, out_base=Pin(0), set_base=Pin(0))
 # Activate State Machine
 sm.active(1)
 
-# Iterate through 0-255 for channels 1-5 at a rate of ~10Hz
+# Iterate through intensity 0-255 at a rate of ~10Hz
 while 1:    
-    for b in range(256):
+    for intensity in range(256):
         led.toggle()
         
-        # Pass values for DMX channels 1-5
-        sm.put(array.array("I", [b, b, b, b, b]), 0)
+        # Pass values for DMX channels 1-4
+        sm.put(array.array("I", [intensity, intensity, intensity, intensity]), 0)
         time.sleep(1/10)
 ```
