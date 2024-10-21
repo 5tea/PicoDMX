@@ -1,5 +1,5 @@
 # PicoDMX
-This could be one of the simplest implentations of the DMX protocol on a Raspberry Pi Pico.
+This could be one of the simplest implementations of the DMX protocol on a Raspberry Pi Pico.
 
 Use an RS485 transceiver. Connect TX to Pin 0.
 
